@@ -40,7 +40,7 @@ REV=$( echo "$Revision: 1.98 $" | cut -d' '  -f2 )
 
 # The repository owner's defaults file;
 # you can override any of the default values in this file:
-USERDEFS=${USERDEFS:-~/.genreprc}
+USERDEFS=${USERDEFS:-genreprc}
 
 # ---------------------------------------------------------------------------
 # Sane defaults:
