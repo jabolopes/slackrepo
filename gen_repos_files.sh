@@ -59,6 +59,9 @@ REPOSOWNERGPG=${REPOSOWNERGPG:-""}
 # Under what URL is the repository accessible:
 DL_URL=${DL_URL:-""}
 
+# Whether to generate an RSS feed.
+RSS=${RSS:-"yes"}
+
 # The title of the generated RSS feed:
 RSS_TITLE=${RSS_TITLE:-"Alien's Slackware packages"}
 
@@ -822,7 +825,7 @@ EOF
 #
 
 # Abort if we need to create the RSS file and RSS_UUID is empty:
-if [ -z "${RSS_UUID}" -a "${CHANGELOG}" = "yes" ]; then
+if [ -z "${RSS_UUID}" -a "${CHANGELOG}" == "yes" -a "${RSS}" == "yes" ]; then
   echo "**"
   echo "** Please supply a value for the Universally Unique IDentifier (UUID) !"
   echo "** Look for the RSS_UUID variable inside the script or in '$USERDEFS',"
@@ -849,8 +852,10 @@ TESTTMP=$(mktemp)
 if [ "${CHANGELOG}" == "yes" ]; then
   # Update ChangeLog.txt with a new entry
   upd_changelog $REPOSROOT
-  # Write a RSS file for the ChangeLog.txt
-  rss_changelog $REPOSROOT
+  if [ "${RSS}" == "yes" ]; then
+	  # Write a RSS file for the ChangeLog.txt
+	  rss_changelog $REPOSROOT
+  fi
 fi
 
 # If we only want to update the ChangeLog files, then we skip a lot:
